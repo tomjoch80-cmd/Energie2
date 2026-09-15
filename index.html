@@ -13,7 +13,6 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-  import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyAoiqkjd-gTwwvwC8ndrcpjRqS8hgENnb8",
@@ -26,7 +25,6 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-  const auth = getAuth(app);
   const DOC = doc(db, 'energie', 'data');
 
   // Expose save function globally
@@ -41,10 +39,8 @@
     } catch(e) { console.error('Firebase save error:', e); throw e; }
   };
 
-  let unsubSnap=null;
-  function startSync(){
-    if(unsubSnap) return; // already listening
-    unsubSnap=onSnapshot(DOC, (snap) => {
+  // Listen for real-time updates
+  onSnapshot(DOC, (snap) => {
     if (!snap.exists()) return;
     const d = snap.data();
     try {
@@ -64,17 +60,6 @@
     console.warn('Firebase offline, using local data:', err.message);
     window._fbLoaded = true;
     window._fbInitData = null;
-    });
-  }
-
-  // Sign in anonymously so Firestore rules can require auth without a login screen
-  signInAnonymously(auth).catch((e)=>{
-    console.error('Anonymous sign-in failed:', e);
-    window._fbLoaded = true;
-    window._fbInitData = null;
-  });
-  onAuthStateChanged(auth, (user) => {
-    if (user) startSync();
   });
 </script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
