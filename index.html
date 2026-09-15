@@ -616,12 +616,12 @@ function runInit() {
   renderPrehled();
 }
 
-// Wait up to 3s for Firebase, then fall back to localStorage
+// Wait up to 8s for Firebase (mobile networks + anonymous sign-in need more headroom), then fall back to localStorage
 (function init(){
   const timeout = setTimeout(() => {
     // Firebase didn't respond in time, use local data
     runInit();
-  }, 3000);
+  }, 8000);
 
   function tryStart() {
     if(window._fbLoaded !== undefined) {
