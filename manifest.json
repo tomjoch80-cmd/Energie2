@@ -1,11 +1,11 @@
 {
-  "name": "Sledování energií",
-  "short_name": "Energie",
-  "description": "Sledování spotřeby elektřiny, plynu a vody",
+  "name": "Sledování energií (test)",
+  "short_name": "Energie 2",
+  "description": "Sledování spotřeby elektřiny, plynu a vody — testovací verze",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0f1923",
-  "theme_color": "#0f1923",
+  "background_color": "#1a130c",
+  "theme_color": "#1a130c",
   "orientation": "portrait",
   "icons": [
     {
