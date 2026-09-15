@@ -764,9 +764,24 @@ function renderPlans(type){
         <span class="plan-vals"> · ${p.price} Kč/${UNITS[type]}${p.pausal?' + '+p.pausal+' Kč paušál':''} · záloha ${p.zaloha} Kč</span>
       </div>
       <div class="plan-actions">
+        <button class="icon-btn" onclick="editPlan('${type}','${p.from}')" title="Upravit"><i class="ti ti-pencil"></i></button>
         <button class="icon-btn danger" onclick="deletePlan('${type}','${p.from}')" title="Smazat"><i class="ti ti-trash"></i></button>
       </div>
     </div>`).join('');
+}
+
+function editPlan(type, from){
+  const p=(settings.plans[type]||[]).find(x=>x.from===from);
+  if(!p) return;
+  const [y,m]=p.from.split('-');
+  document.getElementById('np-y-'+type).value=y;
+  document.getElementById('np-m-'+type).value=m;
+  document.getElementById('np-price-'+type).value=p.price;
+  const pausalEl=document.getElementById('np-pausal-'+type);
+  if(pausalEl) pausalEl.value=p.pausal||'';
+  document.getElementById('np-zal-'+type).value=p.zaloha;
+  document.getElementById('np-price-'+type).scrollIntoView({behavior:'smooth',block:'center'});
+  toast('Uprav hodnoty a klikni na "Přidat ceník" — přepíše se');
 }
 
 // ─── Add form ─────────────────────────────────────────────────────────────────
