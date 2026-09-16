@@ -602,16 +602,13 @@ function runInit() {
   renderPrehled();
 }
 
-// Wait up to 20s for Firebase (this project has been slow to respond — up to 15s even on desktop), then fall back to localStorage
-(function init(){
-  const timeout = setTimeout(() => {
-    // Firebase didn't respond in time, use local data
-    runInit();
-  }, 20000);
+// Render immediately from local cache — never block the UI waiting for network.
+// Firebase data (if any) merges in seamlessly in the background whenever it arrives.
+runInit();
 
+(function initFirebase(){
   function tryStart() {
     if(window._fbLoaded !== undefined) {
-      clearTimeout(timeout);
       if(window._fbInitData) {
         window._fbMerge(
           window._fbInitData.newEntries,
@@ -619,7 +616,6 @@ function runInit() {
           window._fbInitData.newArchived
         );
       }
-      runInit();
     } else {
       setTimeout(tryStart, 100);
     }
