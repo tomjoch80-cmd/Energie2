@@ -1,4 +1,4 @@
-const CACHE = 'energie2-v10';
+const CACHE = 'energie2-v12';
 const ASSETS = [
   './index.html',
   './manifest.json'

@@ -191,6 +191,7 @@ td.neg{text-align:right;font-family:'DM Mono',monospace;font-size:12px;color:var
 .toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%);background:var(--bg3);border:1px solid var(--border2);border-radius:var(--rs);padding:8px 18px;font-size:13px;color:var(--text);opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap;z-index:99;}
 .toast.show{opacity:1;}
 .sec-title{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;font-weight:500;}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -208,7 +209,7 @@ td.neg{text-align:right;font-family:'DM Mono',monospace;font-size:12px;color:var
 
     <!-- PŘEHLED -->
     <div class="page active" id="page-prehled">
-      <div id="prehled-content"></div>
+      <div id="prehled-content"><div style="text-align:center;padding:60px 20px;color:var(--text3);"><i class="ti ti-loader-2" style="font-size:28px;display:inline-block;animation:spin 1s linear infinite;"></i><div style="margin-top:10px;font-size:13px;">Načítám data…</div></div></div>
     </div>
 
     <!-- ODEČET -->
@@ -601,12 +602,12 @@ function runInit() {
   renderPrehled();
 }
 
-// Wait up to 8s for Firebase (mobile networks + anonymous sign-in need more headroom), then fall back to localStorage
+// Wait up to 20s for Firebase (this project has been slow to respond — up to 15s even on desktop), then fall back to localStorage
 (function init(){
   const timeout = setTimeout(() => {
     // Firebase didn't respond in time, use local data
     runInit();
-  }, 8000);
+  }, 20000);
 
   function tryStart() {
     if(window._fbLoaded !== undefined) {
