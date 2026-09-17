@@ -4,8 +4,8 @@
   "description": "Sledování spotřeby elektřiny, plynu a vody — testovací verze",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#1a130c",
-  "theme_color": "#1a130c",
+  "background_color": "#27272a",
+  "theme_color": "#27272a",
   "orientation": "portrait",
   "icons": [
     {
